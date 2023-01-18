@@ -14,5 +14,5 @@ class ExampleCog(commands.Cog):
         await ctx.channel.send("Test command was invoked")
 
 
-def setup(bot):
-    bot.add_cog(ExampleCog(bot))
+async def setup(bot):
+    await bot.add_cog(ExampleCog(bot))

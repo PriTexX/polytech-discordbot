@@ -4,9 +4,7 @@ import os
 
 
 class Bot(commands.Bot):
-    def __init__(self, token):
-        self.token = token
-
+    def __init__(self):
         intents = discord.Intents.default()
         intents.emojis = False
         intents.integrations = False
@@ -18,8 +16,7 @@ class Bot(commands.Bot):
 
         super().__init__(command_prefix='!', intents=intents)
 
-    def run(self):
+    async def setup_hook(self) -> None:
         for filename in os.listdir("./cogs"):
             if filename.endswith(".py"):
-                self.load_extension(f"cogs.{filename[:-3]}")
-        super().run(self.token)
+                await self.load_extension(f"cogs.{filename[:-3]}")
