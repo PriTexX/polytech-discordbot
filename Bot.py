@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from infrastructure.services import LKAuthService
+from infrastructure.services import LKLoginService
 import os
 
 
@@ -15,7 +15,7 @@ class Bot(commands.Bot):
         intents.presences = False
         intents.members = True
 
-        self.auth_service = LKAuthService()
+        self.login_service = LKLoginService()
 
         super().__init__(command_prefix='!', intents=intents)
 
