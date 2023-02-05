@@ -1,5 +1,5 @@
-from abstract.services import LoginService
-from core.entities import LoggedInUser
+from services import LoginService
+from model import LoggedInUser
 
 
 class LKLoginService(LoginService):

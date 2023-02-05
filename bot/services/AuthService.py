@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from core.entities import AuthenticatedUser
+from model import AuthenticatedUser
 
 
 class AuthService(ABC):

@@ -28,7 +28,7 @@ async def reload(ctx, extensions):
 
 
 async def main():
-    from config import TOKEN
+    from config.config import TOKEN
     await bot.start(TOKEN)
 
 
