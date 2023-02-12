@@ -1,10 +1,14 @@
 import psycopg2
+
 from config.config import *
 
 
 class AbstractDAO:
 
     def __init__(self):
+        pass
+
+    def __enter__(self):
         self._connection = psycopg2.connect(
             user=DB_USER,
             password=DB_PASSWORD,
@@ -12,8 +16,9 @@ class AbstractDAO:
             port=DB_PORT,
             database=DB_DATABASE)
         print(self._connection.get_dsn_parameters(), "\n")
+        return self
 
-    def __del__(self):
+    def __exit__(self, type, value, traceback):
         self._connection.close()
 
     def _select_one(self, query: str, params: tuple = None):
@@ -37,4 +42,3 @@ class AbstractDAO:
         rows = cursor.rowcount
         cursor.close()
         return rows
-
