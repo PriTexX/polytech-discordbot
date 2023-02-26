@@ -1,0 +1,14 @@
+import discord
+import math
+
+async def createRole(guild: discord.Guild, name:str, pos:int) -> discord.Role:
+    number_year = int(name[:2])
+    color = discord.Color.from_rgb(int(sin(number_year * 1.43) * 127 + 127),
+                                   int(cos(number_year * e ** 3.31) * 127 + 127),
+                                   int(sin(number_year * e ** 10.55) * 127 + 127))
+    
+    role = await guild.create_role( name = name, color = color, hoist = True, mentionable = True, reason = "Create by bot")
+    all_roles = await guild.fetch_roles()
+    await role.edit(position = pos + 1)
+
+    return role
