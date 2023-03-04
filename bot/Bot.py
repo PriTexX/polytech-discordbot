@@ -1,11 +1,13 @@
 import discord
 from discord.ext import commands
 from services import LKLoginService
+from repository.dao import UserDAO
+from aiohttp import ClientSession
 import os
 
 
 class Bot(commands.Bot):
-    def __init__(self, test_guild_id=None):
+    def __init__(self, client: ClientSession, repository: UserDAO, test_guild_id=None):
         self.testing_guild_id = test_guild_id
         intents = discord.Intents.default()
         intents.emojis = False
@@ -16,6 +18,9 @@ class Bot(commands.Bot):
         intents.guild_reactions = False
         intents.presences = False
         intents.members = True
+
+        self.client = client
+        self.user_repository = repository
 
         self.login_service = LKLoginService()
 
