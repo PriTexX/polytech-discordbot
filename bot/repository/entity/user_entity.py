@@ -1,8 +1,4 @@
-
 class UserEntity:
-    id: int
-    external_id: str
-
     def __init__(self, user_id: int = None, external_id: str = None):
         self.id = user_id
         self.external_id = external_id

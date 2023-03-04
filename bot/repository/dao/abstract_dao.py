@@ -1,6 +1,6 @@
 import psycopg2
 
-from config.config import *
+from config import *
 
 
 class AbstractDAO:

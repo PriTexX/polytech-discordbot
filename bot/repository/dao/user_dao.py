@@ -1,7 +1,7 @@
 from typing import List
 
 from .abstract_dao import AbstractDAO
-from repository.entity.user_entity import UserEntity
+from repository.entity import UserEntity
 
 SELECT_ALL_USERS = 'SELECT discorduserid, onecguid FROM discordstudents'
 SELECT_USER = 'SELECT discorduserid, onecguid FROM discordstudents WHERE discorduserid = %s'
