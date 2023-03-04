@@ -23,7 +23,7 @@ class UserDAO(AbstractDAO):
             return UserEntity()
         return UserEntity(result[0], result[1])
 
-    def save_user(self, user:UserEntity) -> int:
+    def save_user(self, user: UserEntity) -> int:
         remote_user = self.get_user(user.id)
         if remote_user.is_empty():
             return self._execute(INSERT_USER, (user.id, user.external_id))
