@@ -1,13 +1,15 @@
 import discord
 from discord.ext import commands
-from infrastructure.services import LKLoginService
+from services import LKLoginService
 import os
 
 
 class Bot(commands.Bot):
-    def __init__(self):
+    def __init__(self, test_guild_id=None):
+        self.testing_guild_id = test_guild_id
         intents = discord.Intents.default()
         intents.emojis = False
+        intents.message_content = True
         intents.integrations = False
         intents.webhooks = True
         intents.dm_reactions = False
@@ -21,6 +23,13 @@ class Bot(commands.Bot):
 
     async def setup_hook(self) -> None:
         await self.__load_extensions()
+
+        if self.testing_guild_id:
+            guild = discord.Object(self.testing_guild_id)
+            # We'll copy in the global commands to test with:
+            self.tree.copy_global_to(guild=guild)
+            # followed by syncing to the testing guild.
+            await self.tree.sync(guild=guild)
 
     async def __load_extensions(self):
         for filename in os.listdir("./cogs"):
