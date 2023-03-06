@@ -22,7 +22,7 @@ from datetime import datetime
 #         print("smth")
 
 
-class my_modal(ui.Modal, title="Greeting window"):
+class LoginModal(ui.Modal, title="Greeting window"):
     answer = ui.TextInput(label="Enter your Login: ", style=discord.TextStyle.short, placeholder='login@mail.ru',
                           default="login", required=True, max_length=15)
     answerPass = ui.TextInput(label="Enter your Password: ", style=discord.TextStyle.short, placeholder='123',
@@ -43,7 +43,7 @@ class my_modal(ui.Modal, title="Greeting window"):
 # @tree.command(guild=discord.Object(id=1073867799451160588), name='modal', description='An example window')
 # # @bot.slash_command()
 # async def modal(interaction: discord.Interaction):
-#     await interaction.response.send_modal(my_modal())
+#     await interaction.response.send_modal(LoginModal())
 #
 #
 # aclient.run("MTA3Mzg2Nzc5OTQ1MTE2MDU4OA.GLPUUs.SX_x_kGX0oBDQ1zBfmQSAbmjGA_y4G9ge1cC7o")
