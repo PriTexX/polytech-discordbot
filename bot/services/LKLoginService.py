@@ -1,7 +1,7 @@
 from services import LoginService
-from model.entity import LoggedInUser
+from core.entity import LoggedInUser
 from aiohttp import ClientSession
-from model.errors import WrongUsernameOrPasswordException, ServerError
+from core.errors import WrongUsernameOrPasswordException, ServerError
 
 
 class LKLoginService(LoginService):
