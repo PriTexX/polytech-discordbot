@@ -3,6 +3,7 @@ from discord.ext import commands
 from services import LKLoginService
 from repository.dao import UserDAO
 from aiohttp import ClientSession
+from ui import LoginButtonComponent
 import os
 
 
@@ -27,6 +28,8 @@ class Bot(commands.Bot):
 
     async def setup_hook(self) -> None:
         await self.__load_extensions()
+
+        self.add_view(LoginButtonComponent(self.login_service))
 
         if self.testing_guild_id:
             guild = discord.Object(self.testing_guild_id)
