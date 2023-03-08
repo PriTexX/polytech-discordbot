@@ -11,7 +11,7 @@ class UICommandsCog(commands.Cog):
     @app_commands.default_permissions()
     @app_commands.guild_only()
     async def login_button(self, ctx):
-        button = LoginButtonComponent()
+        button = LoginButtonComponent(self.bot.login_service)
         await ctx.response.send_message(view=button)
 
 

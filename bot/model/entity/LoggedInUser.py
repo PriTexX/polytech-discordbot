@@ -1,4 +1,4 @@
-class AuthenticatedUser:
+class LoggedInUser:
     def __init__(self, server_name: str, group: str, department: str, guid: str):
         self.guid = guid
         self.group = group

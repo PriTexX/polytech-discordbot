@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from model import LoggedInUser
+from model.entity import LoggedInUser
 
 
 class LoginService(ABC):

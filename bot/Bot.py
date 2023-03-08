@@ -19,10 +19,9 @@ class Bot(commands.Bot):
         intents.presences = False
         intents.members = True
 
-        self.client = client
         self.user_repository = repository
 
-        self.login_service = LKLoginService()
+        self.login_service = LKLoginService(client=client)
 
         super().__init__(command_prefix='!', intents=intents)
 
