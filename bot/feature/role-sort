@@ -1,0 +1,26 @@
+import discord
+async def sort_role(guild: discord.Guild,all_roles:list) -> discord.Role:
+  parametrs = []
+  all_sort = []  
+  for i in range (len(all_roles)):
+      level = int(all_roles[i][2:3])
+      number_year = int(all_roles[i][:2])
+      direction = int(all_roles[i][4:6])
+      number = int(all_roles[i][6:])   
+      group_name=[level, number_year, direction, number]
+      parametrs.append(group_name)
+  parametrs.sort(key=lambda l: l[3])
+  parametrs.sort(key=lambda k: k[2])
+  parametrs.sort(key=lambda k: k[1])
+  parametrs.sort(key=lambda s: s[0], reverse=True)
+  for i in range (len(parametrs)):
+      level=str(parametrs[i][0])
+      number_year=str(parametrs[i][1])
+      direction=str(parametrs[i][2])
+      number=str(parametrs[i][3])
+      t="-"
+      name=number_year+level+t+direction+number
+      all_sort.append(name)
+  all_roles, all_sort = all_sort, all_roles
+  print(all_roles)
+      
