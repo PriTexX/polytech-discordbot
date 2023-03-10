@@ -22,8 +22,7 @@ class AuthService:
             json = await response.json()
             token = json['token']
 
-        async with self.client.get("https://e.mospolytech.ru/old/lk_api.php/?getAppData&token=" + str(token),
-                                    data={"ulogin": login, "upassword": password}) as response:
+        async with self.client.get("https://e.mospolytech.ru/old/lk_api.php/?getAppData&token=" + str(token)) as response:
             if response.status != 200:
                 raise ServerError("Something went wrong")
             data = await response.json()
