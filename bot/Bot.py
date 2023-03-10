@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from services import LoginService
+from services import AuthService, LoginService, RoleService
 from repository.dao import UserDAO
 from aiohttp import ClientSession
 from ui import LoginButtonComponent
@@ -22,7 +22,7 @@ class Bot(commands.Bot):
 
         self.user_repository = repository
 
-        self.login_service = LoginService(client=client)
+        self.login_service = LoginService(AuthService(client=client), RoleService())
 
         super().__init__(command_prefix='!', intents=intents)
 
