@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from services import LKLoginService
+from services import LoginService
 from repository.dao import UserDAO
 from aiohttp import ClientSession
 from ui import LoginButtonComponent
@@ -12,7 +12,7 @@ class Bot(commands.Bot):
         self.testing_guild_id = test_guild_id
         intents = discord.Intents.default()
         intents.emojis = False
-        intents.message_content = True
+        intents.message_content = True  # TODO change to false
         intents.integrations = False
         intents.webhooks = True
         intents.dm_reactions = False
@@ -22,7 +22,7 @@ class Bot(commands.Bot):
 
         self.user_repository = repository
 
-        self.login_service = LKLoginService(client=client)
+        self.login_service = LoginService(client=client)
 
         super().__init__(command_prefix='!', intents=intents)
 
