@@ -12,7 +12,6 @@ class UserDAO(AbstractDAO):
 
     async def get_all_users(self) -> List[UserEntity]:
         result = await self._pool.fetch(SELECT_ALL_USERS)
-        print(result)
         users = []
         for user_record in result:
             users.append(UserEntity(user_record['discorduserid'], user_record['onecguid']))
