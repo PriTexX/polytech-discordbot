@@ -1,7 +1,3 @@
 TOKEN = "OTg5OTMwNjYwNzc0OTUyOTkx.GfXf2L.Rb-I8mgkl57tge7c5m0uOPaw0rNuyvF-YA9pf0"
 
-DB_USER = 'pritexx'
-DB_PASSWORD = 'DB_PASSWORD'
-DB_HOST = 'DB_HOST'
-DB_PORT = '5432'
-DB_DATABASE = 'discordUsersDB'
+DSN = 'DSN'
