@@ -1,35 +1,28 @@
 import asyncio
-import discord.ext.commands
+from aiohttp import ClientSession
+from repository.dao import UserDAO
+import logging
+from datetime import datetime
 from Bot import Bot
-
-bot = Bot()
-
-
-@bot.command()
-@discord.ext.commands.has_permissions(administrator=True)
-async def load(ctx, extensions):
-    await bot.load_extension(f"cogs.{extensions}")
-    await ctx.author.send("Done")
-
-
-@bot.command()
-@discord.ext.commands.has_permissions(administrator=True)
-async def unload(ctx, extensions):
-    await bot.unload_extension(f"cogs.{extensions}")
-    await ctx.author.send("Done")
-
-
-@bot.command()
-@discord.ext.commands.has_permissions(administrator=True)
-async def reload(ctx, extensions):
-    await bot.unload_extension(f"cogs.{extensions}")
-    await bot.load_extension(f"cogs.{extensions}")
-    await ctx.author.send("Done")
 
 
 async def main():
     from config.config import TOKEN
-    await bot.start(TOKEN)
+
+    logger = logging.getLogger('discord')
+    logger.setLevel(logging.INFO)
+
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    handler = logging.FileHandler(f"./logs/log_discord_{current_date}.txt")
+
+    dt_fmt = '%Y-%m-%d %H:%M:%S'
+    formatter = logging.Formatter('[{asctime}] [{levelname:<8}] {name}: {message}', dt_fmt, style='{')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    async with ClientSession() as client:
+        async with Bot(client, None) as bot:
+            await bot.start(TOKEN)
 
 
 if __name__ == '__main__':
