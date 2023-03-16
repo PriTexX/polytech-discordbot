@@ -9,4 +9,4 @@ class LoginButtonComponent(discord.ui.View):
 
     @discord.ui.button(label="Авторизация", style=discord.ButtonStyle.primary, custom_id="auth-btn")
     async def button_click(self, interaction, button):
-        await interaction.response.send_modal(LoginModalComponent(self.login_service))
+        await self.login_service.login(interaction)
