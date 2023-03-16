@@ -1,5 +1,6 @@
 import asyncio
 from aiohttp import ClientSession
+from pathlib import Path
 from repository.dao import UserDAO
 import logging
 from datetime import datetime
@@ -9,8 +10,10 @@ from Bot import Bot
 async def main():
     from config.config import TOKEN
 
+    Path("./logs").mkdir(parents=True, exist_ok=True)
+
     logger = logging.getLogger('discord')
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.ERROR)
 
     current_date = datetime.now().strftime("%Y-%m-%d")
     handler = logging.FileHandler(f"./logs/log_discord_{current_date}.txt")
