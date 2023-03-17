@@ -1,8 +1,9 @@
+import discord
+
+from core.errors import WrongUsernameOrPasswordException
 from logger import LoggerFactory
-from core.errors import WrongUsernameOrPasswordException, ServerError
 from services import AuthService, RoleService
 from ui import LoginModalComponent
-import discord
 
 
 class LoginService:
@@ -15,19 +16,29 @@ class LoginService:
         modal = LoginModalComponent()
         await interaction.response.send_modal(modal)
 
-        if await modal.wait(): # Вернет False при timeout или если пользователь закроет окно
+        if await modal.wait():  # Вернет False при timeout или если пользователь закроет окно
             return
 
         try:
             authenticated_user = await self.login_service.authenticate(modal.loginInput, modal.passwordInput)
-            await modal.interaction.response.send_message(f"Вы успешно авторизованы {authenticated_user.server_name}", ephemeral=True)
 
         except WrongUsernameOrPasswordException:
-            await modal.interaction.response.send_message("Неверный логин или пароль. Попробуйте ещё раз.", ephemeral=True)
+            await modal.interaction.response.send_message("Неверный логин или пароль. Попробуйте ещё раз.",
+                                                          ephemeral=True)
             return
 
         except Exception:
             self.logger.exception("Unhandled exception during lk api calls")
+            await modal.interaction.response.send_message("Неизвестная ошибка на сервере. Попробуйте ещё раз позже.",
+                                                          ephemeral=True)
             return
 
+        user_role, role_is_new = await self.role_service.getOrCreateRole(interaction.guild, authenticated_user.group)
+        await interaction.user.add_roles(user_role)
+        await interaction.user.edit(nick=authenticated_user.server_name)
 
+        await modal.interaction.response.send_message(f"Вы успешно авторизованы {authenticated_user.server_name}",
+                                                      ephemeral=True)
+        if role_is_new:
+            self.logger.info(f"Correcting roles positions with new role: {user_role.name}")
+            await self.role_service.correctRolesPositions(interaction.guild)
