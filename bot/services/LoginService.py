@@ -25,13 +25,13 @@ class LoginService:
 
         except WrongUsernameOrPasswordException:
             await modal.interaction.response.send_message("Неверный логин или пароль. Попробуйте ещё раз.",
-                                                          ephemeral=True)
+                                                          ephemeral=True, delete_after=120)
             return
 
         except Exception:
             self.logger.exception("Unhandled exception during lk api calls")
             await modal.interaction.response.send_message("Неизвестная ошибка на сервере. Попробуйте ещё раз позже.",
-                                                          ephemeral=True)
+                                                          ephemeral=True, delete_after=120)
             return
 
         user_role, role_is_new = await self.role_service.getOrCreateRole(interaction.guild, authenticated_user.group)
@@ -39,7 +39,7 @@ class LoginService:
         # await interaction.user.edit(nick=authenticated_user.server_name)
 
         await modal.interaction.response.send_message(f"Вы успешно авторизованы {authenticated_user.server_name}",
-                                                      ephemeral=True)
+                                                      ephemeral=True, delete_after=120)
 
         try:
             await interaction.client.user_repository.saveOrUpdateUser(UserEntity(interaction.user.id, authenticated_user.guid))
