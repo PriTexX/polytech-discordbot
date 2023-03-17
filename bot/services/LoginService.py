@@ -34,11 +34,12 @@ class LoginService:
                                                           ephemeral=True, delete_after=120)
             return
 
+        students_role = discord.utils.find(lambda r: r.name == "student", interaction.guild.roles)
         user_role, role_is_new = await self.role_service.getOrCreateRole(interaction.guild, authenticated_user.group)
-        await interaction.user.add_roles(user_role)
-        # await interaction.user.edit(nick=authenticated_user.server_name)
+        await interaction.user.add_roles(students_role, user_role)
+        await interaction.user.edit(nick=authenticated_user.server_name)
 
-        await modal.interaction.response.send_message(f"Вы успешно авторизованы {authenticated_user.server_name}",
+        await modal.interaction.response.send_message(f"Вы успешно авторизованы {authenticated_user.server_name.split()[1]}",
                                                       ephemeral=True, delete_after=120)
 
         try:
