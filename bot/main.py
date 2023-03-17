@@ -1,4 +1,5 @@
 import asyncio
+import asyncpg
 from aiohttp import ClientSession
 from pathlib import Path
 from repository.dao import UserDAO
@@ -8,7 +9,7 @@ from Bot import Bot
 
 
 async def main():
-    from config.config import TOKEN
+    from config import TOKEN, DSN
 
     Path("./logs").mkdir(parents=True, exist_ok=True)
 
@@ -23,8 +24,8 @@ async def main():
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    async with ClientSession() as client:
-        async with Bot(client, None) as bot:
+    async with ClientSession() as client, asyncpg.create_pool(dsn=DSN, command_timeout=60) as pool:
+        async with Bot(client, UserDAO(pool)) as bot:
             await bot.start(TOKEN)
 
 
