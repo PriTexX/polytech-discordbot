@@ -1,3 +1,5 @@
+import re
+
 import discord
 
 from repository.entity import UserEntity
@@ -33,6 +35,10 @@ class LoginService:
             await modal.interaction.response.send_message("Неизвестная ошибка на сервере. Попробуйте ещё раз позже.",
                                                           ephemeral=True, delete_after=120)
             return
+
+        if not re.fullmatch("09.0[346].02", authenticated_user.department_code):
+            await modal.interaction.response.send_message("Ваш код специальности должен быть 09.03.02, 09.04.02 либо 09.06.02 чтобы авторизоваться на данном сервере.",
+                                                          ephemeral=True, delete_after=120)
 
         students_role = discord.utils.find(lambda r: r.name == "student", interaction.guild.roles)
         user_role, role_is_new = await self.role_service.getOrCreateRole(interaction.guild, authenticated_user.group)
