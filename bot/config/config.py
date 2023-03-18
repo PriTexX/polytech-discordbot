@@ -1,3 +1,7 @@
-TOKEN = "OTg5OTMwNjYwNzc0OTUyOTkx.Gz608Y.XDAa0fBjDBeVW23gjlBTemmB44zRLqP_juMQdM"
+import os
+from dotenv import load_dotenv
 
-DSN = 'DSN'
+load_dotenv()
+
+TOKEN = os.environ.get("TOKEN")
+DSN = os.environ.get("DSN")
