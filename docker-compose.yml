@@ -3,6 +3,7 @@ version: "3"
 services:
   bot:
     image: "ghcr.io/pritexx/polytech-discordbot:latest"
+    restart: always
     environment:
       TOKEN: ${TOKEN}
       DSN: ${DSN}
