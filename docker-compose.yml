@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  bot:
+    image: "ghcr.io/pritexx/polytech-discordbot:latest"
+    environment:
+      TOKEN: ${TOKEN}
+      DSN: ${DSN}
+    volumes:
+      - log_volume:/code/logs
+
+volumes:
+  log_volume:
