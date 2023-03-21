@@ -90,5 +90,6 @@ jobs:
           script: |
             cd /home/pritexx/deploy-bot
             echo "${{secrets.ENV_FILE}}" > .env
+            docker-compose pull
             docker-compose --env-file .env up -d
             rm -r /home/pritexx/deploy-bot
