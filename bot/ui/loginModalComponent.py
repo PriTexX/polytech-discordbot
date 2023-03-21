@@ -1,8 +1,6 @@
 import discord
 from discord import ui
 
-from services import LoginService
-
 
 class LoginModalComponent(ui.Modal, title="Окно авторизации"):
     def __init__(self):

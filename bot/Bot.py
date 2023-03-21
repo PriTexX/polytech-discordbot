@@ -3,7 +3,7 @@ from discord.ext import commands
 from services import AuthService, LoginService, RoleService
 from repository.dao import UserDAO
 from aiohttp import ClientSession
-from ui import LoginButtonComponent
+from ui import LoginButtonComponent, BagReportButtonComponent
 import os
 
 
@@ -21,6 +21,7 @@ class Bot(commands.Bot):
         intents.members = True
 
         self.user_repository = repository
+        self.me = None  # User object to send messages directly to my personal messages. Will be set in on_ready event
 
         self.login_service = LoginService(AuthService(client=client), RoleService())
 
@@ -30,6 +31,7 @@ class Bot(commands.Bot):
         await self.__load_extensions()
 
         self.add_view(LoginButtonComponent(self.login_service))
+        self.add_view(BagReportButtonComponent())
 
         if self.testing_guild_id:
             guild = discord.Object(self.testing_guild_id)

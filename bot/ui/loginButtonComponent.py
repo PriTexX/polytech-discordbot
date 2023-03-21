@@ -1,5 +1,4 @@
 import discord
-from ui import LoginModalComponent
 
 
 class LoginButtonComponent(discord.ui.View):
