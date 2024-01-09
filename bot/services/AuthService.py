@@ -34,11 +34,11 @@ class AuthService:
                 raise ServerError("Something went wrong")
             data = await response.json()
 
-            specialty_code = data['specialty'][:9]
+            specialty_code = data['user']['specialty'][:8]
 
             return AuthenticatedUser(
-                f"{data['surname']} {data['name']}",
-                data['group'], specialty_code, student_guid)
+                f"{data['user']['surname']} {data['user']['name']}",
+                data['user']['group'], specialty_code, student_guid)
 
 
 
