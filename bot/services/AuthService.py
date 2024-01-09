@@ -26,10 +26,19 @@ class AuthService:
             if response.status != 200:
                 raise ServerError("Something went wrong")
             data = await response.json()
+            student_guid = data['guid_person']
+
+        # В запросе на getAppData прилетают устаревшие данные, поэтому берем оттуда только гуид
+        async with self.client.get("https://e.mospolytech.ru/old/lk_api.php/?getUser&token=" + str(token)) as response:
+            if response.status != 200:
+                raise ServerError("Something went wrong")
+            data = await response.json()
+
+            specialty_code = data['specialty'][:9]
 
             return AuthenticatedUser(
                 f"{data['surname']} {data['name']}",
-                data['group'], data['specialty_code'], data['guid_person'])
+                data['group'], specialty_code, student_guid)
 
 
 
