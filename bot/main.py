@@ -1,16 +1,14 @@
 import asyncio
-import asyncpg
 from aiohttp import ClientSession
 import aiohttp
 from pathlib import Path
-from repository.dao import UserDAO
 import logging
 from datetime import datetime
 from Bot import Bot
 
 
 async def main():
-    from config import TOKEN, DSN
+    from config import TOKEN
 
     Path("./logs").mkdir(parents=True, exist_ok=True)
 
@@ -25,8 +23,8 @@ async def main():
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    async with ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as client, asyncpg.create_pool(dsn=DSN, command_timeout=60) as pool:
-        async with Bot(client, UserDAO(pool)) as bot:
+    async with ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as client:
+        async with Bot(client) as bot:
             await bot.start(TOKEN)
 
 
